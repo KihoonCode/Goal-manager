@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
+  // user's goal
   const [inputGoal, setInputGoal] = useState("");
+  // user's goal order
+  const [count, setCount] = useState(1);
+  // list of goals of user
   const [goalList, setGoalList] = useState([]);
 
   const inputGoalHandler = input => {
@@ -10,7 +14,8 @@ export default function App() {
   } 
 
   const addGoal = () => {
-    setGoalList([...goalList, inputGoal]);
+    setGoalList([...goalList, {id: Math.random().toString() , value: count + ". " + inputGoal}]);
+    setCount(count + 1);
     // difference between above and below code
     //setGoalList(curr => [...curr, inputGoal]);
   }
@@ -28,12 +33,13 @@ export default function App() {
           onPress={addGoal}       
         />
       </View>
-      <View>
-        {goalList.map(goal => 
-                      <View key={goal} style={styles.goalList}>
-                        <Text>{goal}</Text>
-                      </View>)}
-      </View>
+      <FlatList 
+        data={goalList} 
+        renderItem={itemData => 
+                    <View style={styles.goalList}>
+                      <Text>{itemData.item.value}</Text>
+                    </View>}>
+      </FlatList>
     </View>
   );
 }
@@ -60,6 +66,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: 7,
     padding: 10,
-    backgroundColor: 'grey'
+    width: '87%',
+    backgroundColor: '#99FFFF'
   }
 });
