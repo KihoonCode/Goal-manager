@@ -14,17 +14,24 @@ export default function App() {
    const [goalList, setGoalList] = useState([]);
 
    /*
-   *  addGoal takes a goal and a tool to change the given goal. With the given 
-   *  goal, addGoal adds it to the goal list with a corresponding order number.  
+   *  takes a goal and a tool to change the given goal. Also, 
+   *  adds the given input to the goal list with a corresponding order number.  
    */
    const addGoal = (inputGoal, setInputGoal) => {
-      setGoalList([...goalList, {
+      setGoalList(curr => [...curr, {
          id: Math.random().toString(), value: count + ". " + inputGoal
       }]);
       setCount(count + 1);
       setInputGoal("");
-      // difference between above and below code
-      //setGoalList(curr => [...curr, inputGoal]);
+      // difference between above and below code?
+      // setGoalList([...curr, inputGoal]);
+   }
+
+   /*
+   * takes a goal and deletes the given goal from the user's list.
+   */
+   const deleteGoal = goal => {
+      setGoalList(curr => curr.filter(element => element.id !== goal));
    }
 
    return (
@@ -32,7 +39,12 @@ export default function App() {
          <GoalInput addGoal={addGoal} />
          <FlatList
             data={goalList}
-            renderItem={itemData => <GoalItem value={itemData.item.value} />}>
+            renderItem={itemData =>
+               <GoalItem 
+                  id={itemData.item.id}
+                  value={itemData.item.value} 
+                  deleteGoal={deleteGoal} 
+               />}>
          </FlatList>
       </View>
    );
