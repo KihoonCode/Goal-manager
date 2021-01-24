@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import {
    StyleSheet,
    View,
-   FlatList
+   FlatList,
+   Button
 } from 'react-native';
 import GoalInput from './components/GoalInput';
 import GoalItem from './components/GoalItem'
@@ -12,6 +13,8 @@ export default function App() {
    const [count, setCount] = useState(1);
    // List of goals
    const [goalList, setGoalList] = useState([]);
+
+   const [showModal, setShowModal] = useState(false);
 
    /*
    *  takes a goal and a tool to change the given goal. Also, 
@@ -36,7 +39,8 @@ export default function App() {
 
    return (
       <View style={styles.screen}>
-         <GoalInput addGoal={addGoal} />
+         <Button title="Add a Goal" onPress={() => setShowModal(true)}/>
+         <GoalInput modalStatus={showModal} addGoal={addGoal} />
          <FlatList
             data={goalList}
             renderItem={itemData =>

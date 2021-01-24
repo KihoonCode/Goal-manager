@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Modal } from 'react-native';
 
 const GoalInput = props => {
    // user's current goal
@@ -13,33 +13,36 @@ const GoalInput = props => {
    }
 
    return (
-      <View style={styles.input_container}>
-         <TextInput
-            placeholder="Your goal"
-            style={styles.input}
-            onChangeText={inputGoalHandler}
-            value={inputGoal}
-         />
-         <Button title="ADD"
-            onPress={() => props.addGoal(inputGoal, setInputGoal)}
-         />
-      </View>
+      <Modal onPress={props.modalStatus} animationType="slide">
+         <View style={styles.input_container}>
+            <TextInput
+               placeholder="Your goal"
+               style={styles.input}
+               onChangeText={inputGoalHandler}
+               value={inputGoal}
+            />
+            <Button title="ADD"
+               onPress={() => props.addGoal(inputGoal, setInputGoal)}
+            />
+         </View>
+      </Modal>
    );
 };
 
 const styles = StyleSheet.create({
    input_container: {
-      flexDirection: 'row',
+      flex: 1,
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: 'center'
    },
 
    input: {
       width: '87%',
       borderColor: "black",
       borderWidth: 1,
-      padding: 10
-   }, 
+      padding: 10,
+      margin: 10
+   },
 });
 
 export default GoalInput;
