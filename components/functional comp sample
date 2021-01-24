@@ -5,4 +5,8 @@ const FunctionName = props => {
     return
 };
 
+const styles = StyleSheet.create({
+
+});
+
 export default FunctionName;
