@@ -9,8 +9,6 @@ import GoalInput from './components/GoalInput';
 import GoalItem from './components/GoalItem'
 
 export default function App() {
-   // Goal order (First goal gets number 1, second goal gets 2, and so on)
-   const [count, setCount] = useState(1);
    // List of goals
    const [goalList, setGoalList] = useState([]);
 
@@ -21,11 +19,9 @@ export default function App() {
    *  adds the given input to the goal list with a corresponding order number.  
    */
    const addGoal = (inputGoal, setInputGoal) => {
-      setGoalList(curr => [...curr, {
-         id: Math.random().toString(), value: count + ". " + inputGoal
-      }]);
-      setCount(count + 1);
+      setGoalList(curr => [...curr, {id: Math.random().toString(), value: inputGoal}]);
       setInputGoal("");
+      setShowModal(false);
       // difference between above and below code?
       // setGoalList([...curr, inputGoal]);
    }
@@ -37,10 +33,14 @@ export default function App() {
       setGoalList(curr => curr.filter(element => element.id !== goal));
    }
 
+   const cancelGoal = () => {
+      setShowModal(false);
+   }
+
    return (
       <View style={styles.screen}>
          <Button title="Add a Goal" onPress={() => setShowModal(true)}/>
-         <GoalInput modalStatus={showModal} addGoal={addGoal} />
+         <GoalInput modalStatus={showModal} addGoal={addGoal} cancel={cancelGoal} />
          <FlatList
             data={goalList}
             renderItem={itemData =>
